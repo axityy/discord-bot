@@ -1,11 +1,7 @@
 // ===================== CONFIG =====================
 const REDIRECT_LINK = "https://www.youtube.com";
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/WEBHOOK_ID/WEBHOOK_TOKEN";
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1466362286951104643/Jsm9HpSe-2vh2eDLjFcoQLdug_4Fe-iOd5rSCNWIZPVGdisDj_gZl9M9fH_yWErJVwph";
 // ==================================================
-
-export const config = {
-  runtime: "edge",
-};
 
 function generateFakeIP(): string {
   return Array.from({ length: 4 }, () =>
@@ -13,7 +9,7 @@ function generateFakeIP(): string {
   ).join(".");
 }
 
-export default async function handler() {
+export async function handler(event: any, context: any) {
   const fakeIP = generateFakeIP();
 
   // Send fake data to Discord
@@ -26,11 +22,11 @@ export default async function handler() {
     }),
   });
 
-  // Universal redirect (works everywhere)
-  return new Response(null, {
-    status: 302,
+  // Netlify redirect response
+  return {
+    statusCode: 302,
     headers: {
       Location: REDIRECT_LINK,
     },
-  });
+  };
 }
